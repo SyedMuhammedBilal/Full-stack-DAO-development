@@ -5,7 +5,7 @@ export default makeStyles({
     width: "100%",
     height: "100vh",
     background: "rgba(0, 0, 0, 0.4)",
-    backdropFilter: "blur(35px)",
+    backdropFilter: "blur(25px)",
     zIndex: 99,
     position: "absolute",
     display: "flex",
@@ -18,25 +18,29 @@ export default makeStyles({
     background: "#252525",
     borderRadius: "20px",
     boxShadow: "0px 4px 20px 2px rgba(0, 0, 0, 0.3)",
-    '@media only screen and (max-width: 1840px)': {
+    "@media only screen and (max-width: 1840px)": {
       width: "64rem",
       height: "45rem",
     },
-    '@media only screen and (max-width: 1730px)': {
+    "@media only screen and (max-width: 1730px)": {
       width: "62rem",
       height: "43rem",
     },
-    '@media only screen and (max-width: 1630px)': {
+    "@media only screen and (max-width: 1630px)": {
       width: "60rem",
       height: "41rem",
     },
-    '@media only screen and (max-width: 1530px)': {
+    "@media only screen and (max-width: 1530px)": {
       width: "58rem",
       height: "39rem",
     },
-    '@media only screen and (max-width: 1440px)': {
+    "@media only screen and (max-width: 1440px)": {
       width: "56rem",
       height: "37rem",
+    },
+    "@media only screen and (max-width: 1340px)": {
+      width: "54rem",
+      height: "35rem",
     },
   },
   ModalHeader: {
@@ -64,7 +68,7 @@ export default makeStyles({
   },
   textFieldCustomization: {
     color: "#626262 !important",
-    width: "489.21px",
+    width: "520.21px",
     "& label:focus, input:focus": {
       color: "#fff",
     },
@@ -82,49 +86,48 @@ export default makeStyles({
         borderColor: "#626262",
       },
     },
-    
+  },
+  multilineCustomization: {
+    color: "#626262 !important",
+    width: "520.21px",
+    "& label:focus, input:focus": {
+      color: "#fff",
     },
-    multilineCustomization: {
-        color: "#626262 !important",
-        width: "489.21px",
-        "& label:focus, input:focus": {
-          color: "#fff",
-        },
-        "& .MuiOutlinedInput-multiline": {
-            padding: "45.5px 14px",
-        },
-        borderRadius: "4.35714px",
-        marginTop: "1rem",
-        marginBottom: "1rem",
-        "& .MuiOutlinedInput-root": {
-          "& fieldset": {
-            borderColor: "#626262",
-          },
-          "&:hover fieldset": {
-            borderColor: "#626262",
-          },
-          "&.Mui-focused fieldset": {
-            borderColor: "#626262",
-          },
-        },
+    "& .MuiOutlinedInput-multiline": {
+      padding: "45.5px 14px",
     },
-    buttonWrapper: {
-      paddingLeft: "4rem",
-      paddingRight: "4rem",
-      paddingTop: '4rem',
+    borderRadius: "4.35714px",
+    marginTop: "1rem",
+    marginBottom: "1rem",
+    "& .MuiOutlinedInput-root": {
+      "& fieldset": {
+        borderColor: "#626262",
+      },
+      "&:hover fieldset": {
+        borderColor: "#626262",
+      },
+      "&.Mui-focused fieldset": {
+        borderColor: "#626262",
+      },
+    },
+  },
+  buttonWrapper: {
+    paddingLeft: "4rem",
+    paddingRight: "4rem",
+    paddingTop: "4rem",
     display: "flex",
-    alignItems: 'end',
-    justifyContent: 'flex-end'
-    },
-    submitButton: {
-      width: '246px',
-      height: '50px',
-      backgroundColor: '#076AFF',
-      borderRadius: '10px',
-      color: '#fff',
-      textTransform: 'none',
-      fontSize: '20px',
-      lineHeight: '23px',
-      letterSpacing: '-0.015em'
-    }
+    alignItems: "end",
+    justifyContent: "flex-end",
+  },
+  submitButton: {
+    width: "246px",
+    height: "50px",
+    backgroundColor: "#076AFF",
+    borderRadius: "10px",
+    color: "#fff",
+    textTransform: "none",
+    fontSize: "20px",
+    lineHeight: "23px",
+    letterSpacing: "-0.015em",
+  },
 });
