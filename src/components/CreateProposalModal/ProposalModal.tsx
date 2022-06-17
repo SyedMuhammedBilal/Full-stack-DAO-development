@@ -1,9 +1,17 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import useStyles from "./stylesheet";
+import { setModalOpen } from "../../store/DAO";
+import { useAppDispatch } from "../../store";
 
 const ProposalModal = () => {
   const classes = useStyles();
+  const dispatch = useAppDispatch();
+
+    const close = () => {
+        dispatch(setModalOpen(false))
+    }
+
   return (
     <Box className={classes.MainContainer}>
       <Box className={classes.ModalContainer}>
@@ -46,7 +54,7 @@ const ProposalModal = () => {
           
         </Box>
         <Box className={classes.buttonWrapper}>
-            <Button className={classes.submitButton}>{`Submit proposal`}</Button>
+            <Button onClick={close} className={classes.submitButton}>{`Submit proposal`}</Button>
           </Box>
       </Box>
     </Box>
