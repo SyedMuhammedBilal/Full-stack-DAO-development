@@ -9,12 +9,12 @@ export enum AppRoutes {
 export const routes = [
   {
     index: true,
-    element: Proposal,
+    element: Home,
     path: AppRoutes.Home,
   },
   {
     index: true,
-    element: Home,
+    element: Proposal,
     path: AppRoutes.Proposal,
   },
 ];
