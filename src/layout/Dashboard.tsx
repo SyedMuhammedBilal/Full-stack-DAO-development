@@ -16,7 +16,7 @@ const Dashboard = ({ children }: any) => {
     <>
       {isModalOpen && <ProposalModal />}
      
-        <Box display="flex" position="relative" width="100vw" height="100vh">
+        <Box display="flex" bgcolor="#121315" position="relative" width="100vw" height="100vh">
           <Sidebar />
           <Box width="100%" style={{background: "#121315"}} flex={1} id="dashboard-page">
             <Box width="100%">

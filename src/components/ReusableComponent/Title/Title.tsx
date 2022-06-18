@@ -2,16 +2,17 @@ import { Box, Typography } from "@material-ui/core";
 import React from "react";
 import useStyles from "./stylesheet";
 
-const Title = ({ heading }: any) => {
+const Title = ({ heading, width }: any) => {
   const classes = useStyles();
   return (
     <>
-      <Box>
-        <Typography className={classes.MinterHeading}>
+      <Box style={{ width: width }}>
+        <Typography style={{textAlign: 'start'}} className={classes.MinterHeading}>
           {heading}
         </Typography>
       </Box>
-      <hr style={{ borderColor: '#565656' }} />
+      {/* 565656 */}
+      <hr style={{ borderColor: 'transparent' }} />
     </>
   );
 };

@@ -16,7 +16,7 @@ const RoutedApp = () => {
   return (
     <Router>
       <Dashboard>
-      <Box style={{ marginLeft: '17em' }} height="100%">
+      <Box bgcolor={"#121315"} style={{ marginLeft: '17em' }} height="100%">
         <Switch>
           {routes?.map(({ path, element, index }: any) => {
             return <Route exact={index} path={path} component={element} />

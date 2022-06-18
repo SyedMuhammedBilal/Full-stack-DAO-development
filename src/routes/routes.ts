@@ -1,5 +1,5 @@
-import MintTokens from "../components/MintToken/MintToken";
 import Home from "../pages/Home";
+import Proposal from "../pages/Proposal";
 
 export enum AppRoutes {
   Home = "/",
@@ -14,7 +14,7 @@ export const routes = [
   },
   {
     index: true,
-    element: MintTokens,
+    element: Proposal,
     path: AppRoutes.Proposal,
   },
 ];
