@@ -1,9 +1,11 @@
 import Home from "../pages/Home";
+import Login from "../pages/Login";
 import Proposal from "../pages/Proposal";
 
 export enum AppRoutes {
+  Login = "/",
   Home = "/",
-  Proposal = "/proposal",
+  Proposal = "/proposal/:id",
 }
 
 export const routes = [

@@ -32,6 +32,7 @@
     "redux-observable": "^1.2.0",
     "redux-thunk": "^2.3.0",
     "typescript": "^3.7.5",
+    "web3": "^1.7.3",
     "web3uikit": "^0.1.161"
   },
   "scripts": {

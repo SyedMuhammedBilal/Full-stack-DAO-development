@@ -11,6 +11,7 @@ import CircularProgress, {
 } from "@material-ui/core/CircularProgress";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import useStyles from "./stylesheet";
+import { useAppSelector } from "../../store";
 
 const BorderLinearProgress = withStyles((theme: Theme) =>
   createStyles({
@@ -31,12 +32,13 @@ const BorderLinearProgress = withStyles((theme: Theme) =>
 
 const VotesLinearBar = () => {
   const classes = useStyles();
+  const { forVote } = useAppSelector((state) => state.dao);
   return (
     <Box className={classes.progressContainer}>
       <Box className={classes.progressWrapper}>
         <Box className={classes.votesBox}>
           <Typography className={classes.forVotesTypo}>Votes For</Typography>
-          <Typography className={classes.numberOfVotes}>05</Typography>
+          <Typography className={classes.numberOfVotes}>{forVote}</Typography>
         </Box>
         <Box style={{ marginTop: '0.5rem' }}>
           <BorderLinearProgress variant="determinate" value={50} />

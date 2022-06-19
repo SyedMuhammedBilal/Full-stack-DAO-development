@@ -5,7 +5,7 @@ import InputBase from "@material-ui/core/InputBase";
 import { Theme, withStyles, createStyles } from "@material-ui/core";
 import { ReactComponent as UnfoldIcon } from "../../../assets/SVGs/Arrow/Unfold_More.svg";
 
-const BootstrapInput = withStyles((theme: Theme) =>
+export const BootstrapInput = withStyles((theme: Theme) =>
   createStyles({
     input: {
       borderRadius: '10px',
@@ -57,7 +57,7 @@ const SelectInput = ({ heading }: any) => {
         labelId="demo-customized-select-label"
         id="demo-customized-select"
         value={heading}
-        //   onChange={handleChange}
+        label={heading}
         input={<BootstrapInput />}
         IconComponent={UnfoldIcon}
       >
