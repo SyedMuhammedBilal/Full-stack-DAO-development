@@ -6,14 +6,15 @@ export default makeStyles({
         height: 'auto',
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-start'
+        justifyContent: 'flex-start',
+        cursor: 'pointer',
     },
     goBackBtnWrapper: {
         paddingRight: '1rem',
     },
     ButtonTypo: {
         color: '#076AFF',
-        fontSize: '30px',
+        fontSize: '28px',
         lineHeight: '35px',
         letterSpacing: '-0.015em',
         fontWeigt: 600

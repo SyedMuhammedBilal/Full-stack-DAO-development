@@ -1,11 +1,19 @@
 import { Box, Chip, Typography } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Title from "../ReusableComponent/Title/Title";
 import useStyles from "./stylesheet";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 import DragHandleIcon from "@material-ui/icons/DragHandle";
 import Checkbox from "@material-ui/core/Checkbox";
+import { useParams } from "react-router-dom";
+import { IndexService } from "../../service/index.service";
+import { Contract_ABi } from "../../ABis/RaydiumDAO";
+import { config, contractAddress } from "../../config/config";
+import { useDispatch } from "react-redux";
+import { setAgainstVote, setForVote } from "../../store/DAO";
+import { GetProposalStatus } from "../../helpers/GetProposalStatus";
+import ProposalDetailHeader from "../ProposalDetailHeader/ProposalDetailHeader";
 
 function a11yProps(index: any) {
   return {
@@ -13,56 +21,58 @@ function a11yProps(index: any) {
     "aria-controls": `full-width-tabpanel-${index}`,
   };
 }
-const ProposalDetail = () => {
-  const [value, setValue] = useState(0);
+const ProposalDetail = (props: any) => {
+  const [proposalDetail, setProposalDetail] = useState<any>({});
+  const [proposalStatus, setProposalStatus] = useState<any>("");
+  const [value] = useState(0);
   const [checked, setChecked] = React.useState(true);
+
+  const dispatch = useDispatch();
+
+  const { id } = useParams<any>();
+
+  console.log("ID: ", id);
+
   const classes = useStyles();
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
+  const contractService: IndexService = useMemo(
+    () => new IndexService(Contract_ABi, contractAddress),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [contractAddress, Contract_ABi]
+  );
+
+  useEffect(() => {
+    const getCounts = async () => {
+      const { contractServerUrl } = config;
+      const contract: any = new contractServerUrl.eth.Contract(
+        Contract_ABi,
+        contractAddress
+      );
+      const proposal = await contract.methods.Proposals(id).call({
+        from: sessionStorage.getItem("walletAddress"),
+      });
+      setProposalDetail(proposal);
+      dispatch(setForVote(proposal?.votesUp));
+      dispatch(setAgainstVote(proposal?.votesDown));
+      const status = GetProposalStatus(proposal);
+      console.log("status", status);
+      setProposalStatus(status);
+    };
+    getCounts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contractService]);
+
+  console.log("response", proposalDetail);
+
+  const handleVoteOnProposal = async (vote: any) => {
+    const response: any = await contractService.voteOnProposal(id, vote);
+    console.log("contract", response);
+    return response;
   };
 
   return (
     <Box>
-      <Box>
-        <Title
-          width={"45rem"}
-          heading={
-            "Pull Request #021: Bug on staking  treasurey smart contract."
-          }
-        />
-        <Box className={classes.userProposalDetailContainer}>
-          <Box className={classes.userProposalDetailWrapper}>
-            <Typography
-              className={classes.detailKeyTypo}
-            >{`Proposer`}</Typography>
-            <Typography
-              className={classes.detailValueTypo}
-            >{`0x04af...53f2c`}</Typography>
-          </Box>
-          <Box className={classes.userProposalDetailWrapper}>
-            <Typography
-              className={classes.detailKeyTypo}
-            >{`Timeline`}</Typography>
-            <Typography
-              className={classes.detailValueTypo}
-            >{`18-06-2022, Saturday`}</Typography>
-          </Box>
-          <Box className={classes.userProposalDetailWrapper}>
-            <Typography
-              className={classes.detailKeyTypo}
-              style={{ paddingRight: "5.5rem" }}
-            >{`Status`}</Typography>
-            <Chip
-              style={{
-                backgroundColor: "#076AFF",
-                color: "#fff",
-              }}
-              label="ONGOING"
-            />
-          </Box>
-        </Box>
-      </Box>
+      <ProposalDetailHeader proposalDetail={proposalDetail} proposalStatus={proposalStatus} />
       <Box className={classes.activeTab}>
         <Tabs
           value={value}
@@ -91,21 +101,24 @@ const ProposalDetail = () => {
             <DragHandleIcon style={{ fill: "#737373" }} />
           </Box>
           <Box style={{ paddingLeft: "1rem" }}>
-            <Typography
-              className={classes.proposalTitle}
-            >{`Pull Request #021: Bug on staking  treasurey smart contract.`}</Typography>
+            <Typography className={classes.proposalTitle}>
+              {proposalDetail?.title}
+            </Typography>
           </Box>
         </Box>
 
         <Box className={classes.descriptionBoxWrapper}>
           <Box className={classes.descriptionBox}>
-            <Typography
-              className={classes.descriptionTypo}
-            >{`found a bug on a smart contract that can lead to drainage of Ethers from smart contract.`}</Typography>
+            <Typography className={classes.descriptionTypo}>
+              {proposalDetail?.description}
+            </Typography>
           </Box>
         </Box>
 
-        <Box style={{ marginTop: '1rem' }} className={classes.detaiTitlelWrapper}>
+        <Box
+          style={{ marginTop: "1rem" }}
+          className={classes.detaiTitlelWrapper}
+        >
           <Box>
             <DragHandleIcon style={{ fill: "#737373" }} />
           </Box>
@@ -121,14 +134,17 @@ const ProposalDetail = () => {
             <Box className={classes.voteWrapper}>
               <Box>
                 <Checkbox
-                  defaultChecked
+                  defaultChecked={false}
                   color="primary"
                   inputProps={{ "aria-label": "secondary checkbox" }}
                   className={classes.checkBox}
+                  onChange={(e: any) => handleVoteOnProposal(e.target.checked)}
                 />
               </Box>
               <Box style={{ paddingLeft: "1rem" }}>
-                <Typography className={classes.voteOptionTypo}>{`For`}</Typography>
+                <Typography
+                  className={classes.voteOptionTypo}
+                >{`For`}</Typography>
               </Box>
             </Box>
             <Box className={classes.voteWrapper}>
@@ -138,11 +154,13 @@ const ProposalDetail = () => {
                   inputProps={{ "aria-label": "secondary checkbox" }}
                   defaultChecked={false}
                   className={classes.checkBox}
-                    
+                  onChange={(e: any) => handleVoteOnProposal(false)}
                 />
               </Box>
               <Box style={{ paddingLeft: "1rem" }}>
-                <Typography className={classes.voteOptionTypo}>{`Against`}</Typography>
+                <Typography
+                  className={classes.voteOptionTypo}
+                >{`Against`}</Typography>
               </Box>
             </Box>
           </Box>

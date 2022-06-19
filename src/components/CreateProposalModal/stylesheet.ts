@@ -86,6 +86,9 @@ export default makeStyles({
         borderColor: "#626262",
       },
     },
+    "& .MuiInputBase-input": {
+      color: '#fff'
+    }
   },
   multilineCustomization: {
     color: "#626262 !important",
@@ -110,6 +113,9 @@ export default makeStyles({
         borderColor: "#626262",
       },
     },
+    ".MuiInputBase-input": {
+      color: '#fff'
+    }
   },
   buttonWrapper: {
     paddingLeft: "4rem",

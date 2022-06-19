@@ -1,16 +1,33 @@
 import { Box, Button, InputLabel, TextField, Typography } from "@material-ui/core";
-import React, { useEffect } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import useStyles from "./stylesheet";
 import { setModalOpen } from "../../store/DAO";
 import { useAppDispatch } from "../../store";
+import { useMoralis, useMoralisWeb3Api, useWeb3ExecuteFunction } from "react-moralis";
+import { contractAddress } from "../../config/config";
+import { IndexService } from "../../service/index.service";
+import { Contract_ABi } from "../../ABis/RaydiumDAO";
 
 const ProposalModal = () => {
+  const contractProcessor = useWeb3ExecuteFunction()
+  const [title, setTitle] = useState("")
+  const [description, setDescription] = useState("")
   const classes = useStyles();
   const dispatch = useAppDispatch();
+    const contractService: IndexService = useMemo(
+    () => new IndexService(Contract_ABi, contractAddress), [contractAddress, Contract_ABi]
+  )
 
     const close = () => {
         dispatch(setModalOpen(false))
     }
+
+
+  const createProposal = async (proposalDescription: any, proposalTitle: any) => {
+    const proposal = await contractService.createProposal(proposalDescription, proposalTitle)
+    console.log("created: ", proposal)
+    close()
+  }
 
   return (
     <Box className={classes.MainContainer}>
@@ -23,15 +40,16 @@ const ProposalModal = () => {
           </Box>
           <Box className={classes.inputWrapper}>
             <InputLabel className={classes.inputLabel}>
-              wallet address
+              proposal title
             </InputLabel>
             <TextField
               InputLabelProps={{
                 style: { color: "#fff" },
               }}
+              onChange={(e: any) => setTitle(e.target.value)}
               className={classes.textFieldCustomization}
               id="outlined-basic"
-              label="wallet address"
+              label="title"
               variant="outlined"
             />
 
@@ -42,7 +60,8 @@ const ProposalModal = () => {
               InputLabelProps={{
                 style: { color: "#fff" },
               }}
-              style={{ height: '4rem' }}
+              onChange={(e: any) => setDescription(e.target.value)}
+              style={{ height: '4rem', color: '#fff' }}
               className={classes.multilineCustomization}
               id="outlined-multiline-static"
               label="description..."
@@ -54,7 +73,10 @@ const ProposalModal = () => {
           
         </Box>
         <Box className={classes.buttonWrapper}>
-            <Button onClick={close} className={classes.submitButton}>{`Submit proposal`}</Button>
+            <Button onClick={(e: any) => {
+              e.preventDefault();
+              createProposal(title, description)
+              }} className={classes.submitButton}>{`Submit proposal`}</Button>
           </Box>
       </Box>
     </Box>

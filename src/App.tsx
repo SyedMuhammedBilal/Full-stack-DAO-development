@@ -1,6 +1,7 @@
 import { Box } from "@material-ui/core";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import Web3 from "web3";
 import Dashboard from "./layout/Dashboard";
 import { routes } from "./routes/routes";
 
@@ -13,6 +14,7 @@ function App() {
 };
 
 const RoutedApp = () => {
+
   return (
     <Router>
       <Dashboard>

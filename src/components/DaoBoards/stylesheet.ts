@@ -19,18 +19,17 @@ export default makeStyles((theme) => ({
     background: '#565656',
     borderRadius: '10px',
     color: '#fff',
-    
   },
   proposalsBoardMainContainer: {
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
     justifyContent: "space-between",
   },
   onGoingProposalContainer: {
     marginTop: "2rem",
     display: "flex",
     alignItems: "center",
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     flexDirection: "column",
   },
   boardCardContainer: {
@@ -62,6 +61,7 @@ export default makeStyles((theme) => ({
     alignItems: "start",
     justifyContent: "start",
     flexDirection: "column",
+    cursor: 'pointer',
   },
   proposalHeading: {
     fontWeight: 400,
